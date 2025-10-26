@@ -1,0 +1,38 @@
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS insertAllConstructors $$
+
+CREATE PROCEDURE insertAllConstructors()
+BEGIN
+    INSERT INTO constructors (constructor_name, constructor_created_year)
+    VALUES ('McLaren', 1966);
+
+    INSERT INTO constructors (constructor_name, constructor_created_year)
+    VALUES ('Mercedes', 1954);
+
+    INSERT INTO constructors (constructor_name, constructor_created_year)
+    VALUES ('Ferrari', 1950);
+
+    INSERT INTO constructors (constructor_name, constructor_created_year)
+    VALUES ('Red Bull Racing', 2005);
+
+    INSERT INTO constructors (constructor_name, constructor_created_year)
+    VALUES ('Williams', 1977);
+
+    INSERT INTO constructors (constructor_name, constructor_created_year)
+    VALUES ('Racing Bulls', 2020);
+
+    INSERT INTO constructors (constructor_name, constructor_created_year)
+    VALUES ('Aston Martin', 2021);
+
+    INSERT INTO constructors (constructor_name, constructor_created_year)
+    VALUES ('Kick Sauber', 1993);
+
+    INSERT INTO constructors (constructor_name, constructor_created_year)
+    VALUES ('Haas F1 Team', 2016);
+
+    INSERT INTO constructors (constructor_name, constructor_created_year)
+    VALUES ('Alpine', 2021);
+END $$
+
+DELIMITER ;

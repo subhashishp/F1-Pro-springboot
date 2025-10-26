@@ -1,0 +1,56 @@
+Exception handling with specific controller
+
+So some generic exceptions we handle by creating custom exceptions extending runtime exceptions,
+when i get empty list from db instead of returning empty list i will throw TeamNotFoundException and generic controller will return the response.
+
+----------------------------------------------------------------------------------------
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(DuplicateTeamException.class)
+    public ResponseEntity<String> handleDuplicate(DuplicateTeamException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(TeamNotFoundException.class)
+    public ResponseEntity<String> handleNotFound(TeamNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleGeneric(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                             .body("Unexpected error: " + ex.getMessage());
+    }
+}
+
+
+-----------------------------------------------------------------------------------------
+
+Service
+
+public F1Team getTeamByName(String name) {
+    return repository.findByName(name)
+            .orElseThrow(() -> new TeamNotFoundException("Team '" + name + "' not found"));
+}
+
+------------------------------------------------------------------------------------------
+
+Custom exception
+
+public class TeamAlreadyExistsException extends RuntimeException {
+    public TeamAlreadyExistsException(String message) {
+        super(message);
+    }
+}
+
+public class TeamNotFoundException extends RuntimeException {
+    public TeamNotFoundException(String message) {
+        super(message);
+    }
+}

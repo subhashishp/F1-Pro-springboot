@@ -1,0 +1,14 @@
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS createF1ConstructorsTable $$
+
+CREATE PROCEDURE createF1TeamsTable()
+BEGIN
+    CREATE TABLE IF NOT EXISTS constructors (
+        constructor_id INT AUTO_INCREMENT PRIMARY KEY,
+        constructor_name VARCHAR(100) NOT NULL,
+        constructor_created_year YEAR
+    );
+END $$
+
+DELIMITER ;
