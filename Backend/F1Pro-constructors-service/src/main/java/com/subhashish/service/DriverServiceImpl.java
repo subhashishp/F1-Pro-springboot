@@ -1,7 +1,9 @@
 package com.subhashish.service;
 
+import com.subhashish.dto.DriverDTO;
 import com.subhashish.entity.Driver;
 import com.subhashish.repository.DriverRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,10 @@ import java.util.Optional;
 public class DriverServiceImpl implements DriverService {
 
     @Autowired
-    DriverRepository driverRepository;
+    private DriverRepository driverRepository;
+
+    @Autowired
+    private ModelMapper mapper;
 
     @Override
     public List<Driver> getAllDriver() {
@@ -32,5 +37,15 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public Optional<Driver> getDriverById(Integer id) {
         return driverRepository.findById(id);
+    }
+
+    public DriverDTO convertToDto(Driver driver){
+        mapper.typeMap(Driver.class, DriverDTO.class)
+                .addMappings(modelMapper -> {
+                    modelMapper.map(src -> src.getConstructor().getId(), DriverDTO::setConstructorId);
+                    modelMapper.map(src -> src.getConstructor().getName(), DriverDTO::setConstructorName);
+                });
+
+        return mapper.map(driver, DriverDTO.class);
     }
 }
