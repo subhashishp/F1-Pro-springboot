@@ -4,3 +4,5 @@ When driver is called it calls Constructor then it calls Driver and it goes on
 
 so use @JsonIgnore the class in which this is used the mapping kindof is removed and it wont get the other object directly.
 Like in our case it is used in Driver as mostly from Constructor -> Driver is more needed and now Driver in general doesn't returns the Constructor.
+
+This can also be done using DTO where we map the parameter of the mapped object instead of the object.
