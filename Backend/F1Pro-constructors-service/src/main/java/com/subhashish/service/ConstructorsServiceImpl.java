@@ -20,13 +20,14 @@ public class ConstructorsServiceImpl implements ConstructorsService {
 
     @Override
     public Constructors getById(Integer id){
-        //System.out.println(repository.getById(id));
+        LOGGER.info("fetching constructor details using id {}",id);
         return repository.getById(id);
     }
 
     @Override
     public List<Constructors> getAllConstructorsDetials(){
         //System.out.println(repository.findAll().getFirst().getName());
+        LOGGER.info("fetching constructor details");
         return repository.findAll();
     }
 

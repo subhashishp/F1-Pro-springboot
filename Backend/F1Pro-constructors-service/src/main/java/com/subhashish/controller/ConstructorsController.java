@@ -24,7 +24,7 @@ public class ConstructorsController {
 
     @GetMapping("/constructor/{constructorId}")
     public ResponseEntity<Constructors> getById(@PathVariable("constructorId")  Integer id){
-        logger.warn("Fetching Constructor by constructor id : {}", id);
+        logger.warn("requesting Constructor by constructor id : {}", id);
 
         Constructors obj = constructorsService.getById(id);
         if(obj == null)
@@ -34,7 +34,7 @@ public class ConstructorsController {
 
     @GetMapping("/allConstructors")
     public ResponseEntity<List<Constructors>> getAllConstructors(){
-        logger.info("Fetching all constructors");
+        logger.info("requesting all constructors");
 
         List<Constructors> constructors =  constructorsService.getAllConstructorsDetials();
         return new ResponseEntity<>(constructors, HttpStatus.OK);
@@ -42,7 +42,7 @@ public class ConstructorsController {
 
     @GetMapping("/constructor")
     public ResponseEntity<Constructors> getByName(@RequestParam(name = "constructorName") String name){
-        logger.info("fetching Constructor by name : {}",name);
+        logger.info("requesting Constructor by name : {}",name);
         Constructors obj = constructorsService.getByConstructorName(name);
         if(obj == null)
             return ResponseEntity.notFound().build();
