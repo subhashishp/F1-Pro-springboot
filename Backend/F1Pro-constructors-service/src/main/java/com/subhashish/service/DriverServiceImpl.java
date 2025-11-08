@@ -1,5 +1,6 @@
 package com.subhashish.service;
 
+import com.subhashish.constants.Constant;
 import com.subhashish.dto.DriverDTO;
 import com.subhashish.entity.Driver;
 import com.subhashish.exception.ServiceLayerException;
@@ -34,7 +35,7 @@ public class DriverServiceImpl implements DriverService {
         } catch (DataAccessException ex){
             throw new ServiceLayerException("Database error while fetching driver",ex);
         } catch (Exception ex){
-            throw new RuntimeException("Unexcepted error",ex);
+            throw new RuntimeException(Constant.INTERNAL_SERVER_ERROR,ex);
         }
     }
 
@@ -46,7 +47,7 @@ public class DriverServiceImpl implements DriverService {
         } catch (DataAccessException ex){
             throw new ServiceLayerException("Database error while fetching driver",ex);
         } catch (Exception ex){
-            throw new RuntimeException("Un-expected error while fetching driver details",ex);
+            throw new RuntimeException(Constant.INTERNAL_SERVER_ERROR,ex);
         }
     }
 
@@ -58,7 +59,7 @@ public class DriverServiceImpl implements DriverService {
         } catch (DataAccessException ex) {
             throw new ServiceLayerException("Un-expected error while fetching driver details",ex);
         } catch (Exception ex){
-            throw new RuntimeException("Un-expected error while fetching driver details",ex);
+            throw new RuntimeException(Constant.INTERNAL_SERVER_ERROR,ex);
         }
     }
 
@@ -70,7 +71,7 @@ public class DriverServiceImpl implements DriverService {
         } catch (DataAccessException ex) {
             throw new ServiceLayerException("Un-expected error while fetching driver details",ex);
         } catch (Exception ex){
-            throw new RuntimeException("Un-expected error while fetching driver details",ex);
+            throw new RuntimeException(Constant.INTERNAL_SERVER_ERROR,ex);
         }
     }
 
