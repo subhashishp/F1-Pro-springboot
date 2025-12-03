@@ -1,5 +1,7 @@
 package com.subhashish.controller;
 
+import com.subhashish.dto.DriverCreateRequest;
+import com.subhashish.dto.DriverDTO;
 import com.subhashish.entity.Driver;
 import com.subhashish.service.DriverService;
 import org.slf4j.Logger;
@@ -51,5 +53,13 @@ public class DriverController {
         }
         LOGGER.info("Sending driver details for driver named {}", name);
         return ResponseEntity.ok(driver);
+    }
+
+    @PostMapping("/new-driver")
+    ResponseEntity<Void> saveNewDriver(@RequestBody DriverDTO driver){
+        LOGGER.info("Received details of new driver");
+        driverService.saveNewDriver(driver);
+
+        return ResponseEntity.ok().build();
     }
 }

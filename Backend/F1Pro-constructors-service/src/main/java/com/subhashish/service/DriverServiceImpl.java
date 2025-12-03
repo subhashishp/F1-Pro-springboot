@@ -75,6 +75,17 @@ public class DriverServiceImpl implements DriverService {
         }
     }
 
+    public Driver saveNewDriver(DriverDTO driver){
+        LOGGER.info("Driver details received in service {} ", driver);
+        Driver driverEntity = this.convertToEntity(driver);
+        LOGGER.info("Driver Entity : {} ,{}, {} ,{}, {}", driverEntity.getId(),driverEntity
+                .getNumber(),driverEntity.getName(),driverEntity.getDob(),driverEntity.getConstructor());
+
+        driverRepository.save(driverEntity);
+
+        return driverEntity;
+    }
+
     public DriverDTO convertToDto(Driver driver){
         try {
             mapper.typeMap(Driver.class, DriverDTO.class)
@@ -92,4 +103,17 @@ public class DriverServiceImpl implements DriverService {
             throw new RuntimeException(ex);
         }
     }
+
+    public Driver convertToEntity(DriverDTO driver){
+        try {
+            return mapper.map(driver,Driver.class);
+        } catch (NullPointerException ex){
+            throw new NullPointerException();
+        } catch (MappingException ex){
+            throw new RuntimeException("Error while mapping to Entity", ex);
+        } catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
 }

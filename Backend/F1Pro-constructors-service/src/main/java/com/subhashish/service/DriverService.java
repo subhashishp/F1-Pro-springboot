@@ -1,5 +1,6 @@
 package com.subhashish.service;
 
+import com.subhashish.dto.DriverDTO;
 import com.subhashish.entity.Driver;
 
 import java.util.List;
@@ -11,5 +12,6 @@ public interface DriverService {
     Driver getDriverByName(String name);
     Driver getDriverByNumber(Integer number);
     Optional<Driver> getDriverById(Integer id);
+    Driver saveNewDriver(DriverDTO driver);
 
 }

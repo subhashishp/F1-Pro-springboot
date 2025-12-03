@@ -1,0 +1,19 @@
+JsonNode root = mapper.readTree(jsonString);
+WeatherDTO dto = mapper.readValue(jsonString, WeatherDTO.class);
+
+// manually fix mismatched ones
+dto.setCity(root.get("city_name").asText());
+dto.setCondition(root.get("weather_condition_condition").asText());
+
+
+Feature	readTree()	readValue()
+Return type	JsonNode (tree model)	Java object (POJO, DTO, Map, List)
+Flexibility	Very flexible, schema-free	Requires known schema/class
+Mapping	Manual field extraction (.get())	Automatic mapping if names match
+Best for	Dynamic JSON, partial fields, unknown structure	Structured JSON, DTOs, full mapping
+
+To accept Json as string then access the data we use JsonNode.
+
+
+readTree when the object and not ready or schema we dont know. It give us JsonNode type which we can handle by above style
+readValue maps the string json into our object
