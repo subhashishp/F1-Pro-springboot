@@ -77,6 +77,10 @@ public class DriverServiceImpl implements DriverService {
 
     public Driver saveNewDriver(DriverDTO driver){
         LOGGER.info("Driver details received in service {} ", driver);
+
+        if(this.getDriverByNumber(driver.getNumber())!= null)
+            throw new IllegalArgumentException("Driver number already exists: " + driver.getNumber());
+
         Driver driverEntity = this.convertToEntity(driver);
         LOGGER.info("Driver Entity : {} ,{}, {} ,{}, {}", driverEntity.getId(),driverEntity
                 .getNumber(),driverEntity.getName(),driverEntity.getDob(),driverEntity.getConstructor());

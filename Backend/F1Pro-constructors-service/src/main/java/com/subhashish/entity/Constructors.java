@@ -21,7 +21,7 @@ public class Constructors {
 
     @Id
     @Column(name = "constructor_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "constructor_name", nullable = false)

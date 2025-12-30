@@ -9,4 +9,5 @@ public interface ConstructorsService {
      Constructors getById(Integer id);
      List<Constructors> getAllConstructorsDetials();
      Constructors getByConstructorName(String name);
+     Constructors saveNewConstructor(String name, Integer year);
 }

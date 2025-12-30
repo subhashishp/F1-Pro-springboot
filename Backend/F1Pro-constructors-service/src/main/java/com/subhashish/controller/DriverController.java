@@ -1,9 +1,9 @@
 package com.subhashish.controller;
 
-import com.subhashish.dto.DriverCreateRequest;
 import com.subhashish.dto.DriverDTO;
 import com.subhashish.entity.Driver;
 import com.subhashish.service.DriverService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +56,7 @@ public class DriverController {
     }
 
     @PostMapping("/new-driver")
-    ResponseEntity<Void> saveNewDriver(@RequestBody DriverDTO driver){
+    ResponseEntity<Void> saveNewDriver(@Valid @RequestBody DriverDTO driver){
         LOGGER.info("Received details of new driver");
         driverService.saveNewDriver(driver);
 

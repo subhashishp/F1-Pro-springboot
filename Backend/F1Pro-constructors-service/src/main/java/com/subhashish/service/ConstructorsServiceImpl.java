@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Year;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,5 +39,12 @@ public class ConstructorsServiceImpl implements ConstructorsService {
             return null;
         else
             return list.getFirst();
+    }
+
+    public Constructors saveNewConstructor(String name, Integer year){
+        Constructors constructor = new Constructors();
+        constructor.setName(name);
+        constructor.setYear(Year.of(year));
+        return repository.save(constructor);
     }
 }
