@@ -34,7 +34,8 @@ public class ConstructorsServiceImpl implements ConstructorsService {
 
     public Constructors getByConstructorName(String name){
         List<Constructors> list = repository.findByNameIgnoreCase(name);
-        LOGGER.info("Fetched {} constructor from DB",list.getFirst().getName());
+
+        LOGGER.info("Fetched {} constructor from DB",list.size());
         if(list.isEmpty())
             return null;
         else

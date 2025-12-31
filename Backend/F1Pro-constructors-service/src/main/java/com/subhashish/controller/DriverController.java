@@ -1,7 +1,11 @@
 package com.subhashish.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.subhashish.dto.DriverDTO;
+import com.subhashish.entity.Constructors;
 import com.subhashish.entity.Driver;
+import com.subhashish.exception.ResourceNotFoundException;
+import com.subhashish.service.ConstructorsService;
 import com.subhashish.service.DriverService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -20,6 +24,9 @@ public class DriverController {
 
     @Autowired
     DriverService driverService;
+
+    @Autowired
+    ConstructorsService constructorsService;
 
     @GetMapping("/")
     public ResponseEntity<List<Driver>> getAllDrivers(){
@@ -61,5 +68,30 @@ public class DriverController {
         driverService.saveNewDriver(driver);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/updateConstructor/{driver_id}")
+    ResponseEntity<Constructors> updateDriverToConstruct(@PathVariable("driver_id") Integer driver,@RequestBody JsonNode request){
+
+        JsonNode constructorIdNode = request.get("constructorId");
+        JsonNode constructorNameNode = request.get("constructorName");
+        Integer constructorId = 0;
+
+        if(constructorIdNode != null){
+            constructorId = constructorIdNode.asInt();
+        }
+        else if(constructorNameNode != null) {
+            Constructors obj = constructorsService.getByConstructorName(constructorNameNode.asText());
+            if(obj == null)
+                throw new ResourceNotFoundException("Constructor not found");
+            else
+                constructorId = obj.getId();
+        }
+
+        LOGGER.info("Adding driver {} to {} constructorId",driver,constructorId);
+
+        driverService.updateDriverConstructor(driver,constructorId);
+
+        return ResponseEntity.ok(constructorsService.getById(constructorId));
     }
 }

@@ -2,9 +2,13 @@ package com.subhashish.service;
 
 import com.subhashish.constants.Constant;
 import com.subhashish.dto.DriverDTO;
+import com.subhashish.entity.Constructors;
 import com.subhashish.entity.Driver;
+import com.subhashish.exception.ResourceNotFoundException;
 import com.subhashish.exception.ServiceLayerException;
+import com.subhashish.repository.ConstructorsRepository;
 import com.subhashish.repository.DriverRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -23,6 +27,9 @@ public class DriverServiceImpl implements DriverService {
 
     @Autowired
     private DriverRepository driverRepository;
+
+    @Autowired
+    private ConstructorsRepository constructorsRepository;
 
     @Autowired
     private ModelMapper mapper;
@@ -75,6 +82,7 @@ public class DriverServiceImpl implements DriverService {
         }
     }
 
+    @Override
     public Driver saveNewDriver(DriverDTO driver){
         LOGGER.info("Driver details received in service {} ", driver);
 
@@ -88,6 +96,24 @@ public class DriverServiceImpl implements DriverService {
         driverRepository.save(driverEntity);
 
         return driverEntity;
+    }
+
+    @Transactional
+    @Override
+    public void updateDriverConstructor(Integer driverId, Integer constructorId){
+        LOGGER.info("Updating driver's constructor for driver id {}", driverId);
+
+        Driver driver = driverRepository.findById(driverId)
+                .orElseThrow(() -> new ResourceNotFoundException("Driver not found"));
+
+        Constructors constructorObj = constructorsRepository.findById(constructorId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Constructor not found"));
+
+        driver.setConstructor(constructorObj);
+
+        LOGGER.info("Updated the driver's constructor to {}", constructorObj.getName());
+
+        return;
     }
 
     public DriverDTO convertToDto(Driver driver){
