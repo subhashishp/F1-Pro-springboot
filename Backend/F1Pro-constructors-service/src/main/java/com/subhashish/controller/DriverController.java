@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/F1-Pro/driver")
@@ -93,5 +96,22 @@ public class DriverController {
         driverService.updateDriverConstructor(driver,constructorId);
 
         return ResponseEntity.ok(constructorsService.getById(constructorId));
+    }
+
+    @DeleteMapping("removeConstructor/{driver_id}")
+    ResponseEntity<Map<String,Object>> removeDriverFromConstructor(@PathVariable(name = "driver_id") Integer driverId){
+        LOGGER.info("Request to removing constructor mapping for driver having id {}", driverId);
+
+        int rowEffected = driverService.removeDriverConstructor(driverId);
+
+        Map<String,Object> response = new HashMap<>();
+
+        response.put("constructorsRemoved", rowEffected);
+        response.put("driverId", driverId);
+        response.put("message", "Constructor removed successfully");
+        response.put("status", true);
+        response.put("timestamp", new Date());
+
+        return ResponseEntity.ok(response);
     }
 }

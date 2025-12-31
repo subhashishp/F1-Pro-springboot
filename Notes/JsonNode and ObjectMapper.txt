@@ -17,3 +17,29 @@ To accept Json as string then access the data we use JsonNode.
 
 readTree when the object and not ready or schema we dont know. It give us JsonNode type which we can handle by above style
 readValue maps the string json into our object
+
+
+For response
+
+⚖️ When to use what
+- Use Map → for simple, flat JSON responses.
+- Use ObjectNode / JsonNode → when you need nested JSON structures or dynamic building.
+- Use DTO classes → when you want strong typing, validation, and consistent API contracts across your project.
+
+
+example using map
+
+Map<String, Object> response = new HashMap<>();
+response.put("message", "Driver removed successfully"); // String
+response.put("status", true);                           // Boolean
+response.put("code", 200);                              // Integer
+response.put("timestamp", System.currentTimeMillis());  // Long
+
+🔎 Why Object instead of String
+- Flexibility:
+JSON values can be strings, numbers, booleans, or even nested objects/arrays.
+If you use Map<String, String>, you’re limited to only string values.
+- Serialization:
+Spring Boot (via Jackson) automatically converts a Map<String, Object> into JSON.
+For example:
+

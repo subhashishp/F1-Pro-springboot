@@ -17,4 +17,6 @@ public interface DriverService {
 
     @Transactional
     void updateDriverConstructor(Integer driverId, Integer constructorId);
+
+    int removeDriverConstructor(Integer driverId);
 }

@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -114,6 +115,21 @@ public class DriverServiceImpl implements DriverService {
         LOGGER.info("Updated the driver's constructor to {}", constructorObj.getName());
 
         return;
+    }
+
+    @Override
+    @Transactional
+    public int removeDriverConstructor(Integer driverId){
+        LOGGER.info("Removing constructor for driver id {}", driverId);
+
+        int rowEffected = driverRepository.removeDriverConstructor(driverId);
+
+        LOGGER.info("Number of constructors removed {} ", rowEffected);
+
+        if(rowEffected == 0)
+            throw new ResourceNotFoundException("Driver not found for the provided id. No constructor removed");
+        else
+            return rowEffected;
     }
 
     public DriverDTO convertToDto(Driver driver){
