@@ -95,7 +95,7 @@ public class DriverController {
 
         driverService.updateDriverConstructor(driver,constructorId);
 
-        return ResponseEntity.ok(constructorsService.getById(constructorId));
+        return ResponseEntity.ok(constructorsService.getById(constructorId).get());
     }
 
     @DeleteMapping("removeConstructor/{driver_id}")

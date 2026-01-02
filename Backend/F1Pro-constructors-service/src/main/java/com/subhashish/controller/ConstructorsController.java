@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/F1-Pro")
@@ -26,10 +27,8 @@ public class ConstructorsController {
     public ResponseEntity<Constructors> getById(@PathVariable("constructorId")  Integer id){
         logger.warn("requesting Constructor by constructor id : {}", id);
 
-        Constructors obj = constructorsService.getById(id);
-        if(obj == null)
-            return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(obj);
+        Optional<Constructors> obj = constructorsService.getById(id);
+        return obj.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/allConstructors")

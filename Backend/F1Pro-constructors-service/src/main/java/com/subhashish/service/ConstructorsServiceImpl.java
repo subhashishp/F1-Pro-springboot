@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Year;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ConstructorsServiceImpl implements ConstructorsService {
@@ -20,9 +20,9 @@ public class ConstructorsServiceImpl implements ConstructorsService {
     ConstructorsRepository repository;
 
     @Override
-    public Constructors getById(Integer id){
+    public Optional<Constructors> getById(Integer id){
         LOGGER.info("fetching constructor details using id {}",id);
-        return repository.getById(id);
+        return repository.findById(id);
     }
 
     @Override
@@ -32,6 +32,7 @@ public class ConstructorsServiceImpl implements ConstructorsService {
         return repository.findAll();
     }
 
+    @Override
     public Constructors getByConstructorName(String name){
         List<Constructors> list = repository.findByNameIgnoreCase(name);
 
@@ -42,6 +43,7 @@ public class ConstructorsServiceImpl implements ConstructorsService {
             return list.getFirst();
     }
 
+    @Override
     public Constructors saveNewConstructor(String name, Integer year){
         Constructors constructor = new Constructors();
         constructor.setName(name);
